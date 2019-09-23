@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="MeusLivros.Views.LivroListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MeusLivros.Views"
+             xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="livroSource"
+                          Source="{Binding AllLivros}">
+            <CollectionViewSource.SortDescriptions>
+                <ComponentModel:SortDescription PropertyName="Titulo" />
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+    </UserControl.Resources>
+    <DockPanel Margin="5">
+        <Border DockPanel.Dock="Top"
+        Style="{StaticResource header}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Todos os Livros (" />
+                <TextBlock Text="{Binding AllLivros.Count}" />
+                <TextBlock Text=")" />
+            </StackPanel>
+        </Border>
+        <StackPanel DockPanel.Dock="Bottom"
+                    Style="{StaticResource buttonPanel}">
+            <Button Content="Fechar"
+                    Click="Close_Click" />
+        </StackPanel>
+        <ListView Margin="5"
+                  ItemsSource="{Binding Source={StaticResource livroSource}}"
+                  Button.Click="OpenLivro_Click">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Style="{StaticResource openButton}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Editora"
+                                    DisplayMemberBinding="{Binding Editora}" />
+                    <GridViewColumn Header="Ano"
+                                    DisplayMemberBinding="{Binding Ano}" />
+                    <GridViewColumn Header="Edição"
+                                    DisplayMemberBinding="{Binding Edicao}" />
+                    <GridViewColumn Header="Título"
+                                    DisplayMemberBinding="{Binding Titulo}" />
+                    <GridViewColumn Header="Autor(es)"
+                                    DisplayMemberBinding="{Binding Autor[0]}" />
+                    <GridViewColumn Header="Páginas"
+                                    DisplayMemberBinding="{Binding Paginas}" />
+                    <GridViewColumn Header="Lido"
+                                    DisplayMemberBinding="{Binding Lido}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </DockPanel>
+</UserControl>

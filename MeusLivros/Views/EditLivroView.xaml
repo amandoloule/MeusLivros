@@ -1,0 +1,192 @@
+﻿<UserControl x:Class="MeusLivros.Views.EditLivroView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MeusLivros.Views"
+             xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="cadastradosSource"
+                              Source="{Binding JaCadastrados}">
+            <CollectionViewSource.SortDescriptions>
+                <ComponentModel:SortDescription PropertyName="Nome" />
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+    </UserControl.Resources>
+    <DockPanel Margin="5">
+        <Border DockPanel.Dock="Top"
+                Style="{StaticResource header}">
+            <DockPanel LastChildFill="False">
+                <TextBlock DockPanel.Dock="Left"
+                           Text="{Binding Livro.Titulo}" />
+                <TextBlock DockPanel.Dock="Right"
+                           Text="{Binding Livro.Autores}" />
+            </DockPanel>
+        </Border>
+        <StackPanel DockPanel.Dock="Bottom"
+                    Style="{StaticResource buttonPanel}">
+            <Button Content="Salvar"
+                    Click="Save_Click" />
+            <Button Content="Excluir"
+                    Click="Delete_Click" />
+            <Button Content="Fechar"
+                    Click="Close_Click" />
+        </StackPanel>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <GroupBox BorderBrush="{StaticResource lightBlueBrush}">
+                    <GroupBox.Header>
+                        <Border Background="{StaticResource lightBlueBrush}"
+                                Style="{StaticResource groupBoxHeader}">
+                            <TextBlock Text="Geral" />
+                        </Border>
+                    </GroupBox.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="175" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid Grid.RowSpan="4">
+                            <Border Background="Gray"
+                                    CornerRadius="6"
+                                    Margin="2 2 0 0"
+                                    Opacity=".5" />
+                            <Border Margin="2 2 4 4"
+                                    Background="White" />
+                            <Viewbox Margin="2 2 4 4">
+                                <Image Source="{Binding Livro.ImagePath}" />
+                            </Viewbox>
+                            <Border BorderThickness="2"
+                                    Background="Transparent"
+                                    CornerRadius="6"
+                                    Margin="0 0 2 2"
+                                    BorderBrush="{StaticResource lightBlueBrush}" />
+                            <Button Background="White"
+                                    Click="SelectImage_Click"
+                                    Style="{StaticResource openButton}"
+                                    Foreground="{StaticResource lightBlueBrush}"
+                                    BorderBrush="{StaticResource lightBlueBrush}" />
+                        </Grid>
+                        <Label Grid.Column="1"
+                               Content="_Editora:"
+                               Target="{Binding ElementName=editora}" />
+                        <TextBox x:Name="editora"
+                                 Grid.Column="2"
+                                 Text="{Binding Livro.Editora}" />
+                        <Label Grid.Row="1"
+                               Grid.Column="1"
+                               Content="_Ano:"
+                               Target="{Binding ElementName=ano}" />
+                        <TextBox x:Name="ano"
+                                 Grid.Row="1"
+                                 Grid.Column="2"
+                                 Text="{Binding Livro.Ano}" />
+                        <Label Grid.Row="2"
+                               Grid.Column="1"
+                               Content="E_dição:"
+                               Target="{Binding ElementName=edicao}" />
+                        <TextBox x:Name="edicao"
+                                 Grid.Row="2"
+                                 Grid.Column="2"
+                                 Text="{Binding Livro.Edicao}" />
+                        <Label Grid.Row="3"
+                               Grid.Column="1"
+                               Content="_Titulo:"
+                               Target="{Binding ElementName=titulo}" />
+                        <TextBox x:Name="titulo"
+                                 Grid.Row="3"
+                                 Grid.Column="2"
+                                 Text="{Binding Livro.Titulo}" />
+                    </Grid>
+                </GroupBox>
+                <GroupBox BorderBrush="{StaticResource greenBrush}">
+                    <GroupBox.Header>
+                        <Border Background="{StaticResource greenBrush}"
+                                Style="{StaticResource groupBoxHeader}">
+                            <TextBlock Text="Autor(es)" />
+                        </Border>
+                    </GroupBox.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Label Content="Já Cadastrados:" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Button Content=">" Grid.Row="2" Grid.Column="1" Grid.RowSpan="3" Width="20"
+                                Click="ParaDireita_Click" />
+                        <Label Content="Autor(es):" Grid.Column="2" HorizontalAlignment="Center" />
+                        <ListBox x:Name="cadastrados" Grid.Row="2" MaxHeight="150"
+                                 ItemsSource="{Binding Source={StaticResource cadastradosSource}}" />
+                        <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Label Content="Autor:" HorizontalAlignment="Left" />
+                            <TextBox x:Name="novoAutor" HorizontalAlignment="Left" Width="60" />
+                            <Button Content="+" Click="AddAuthor_Click" />
+                        </StackPanel>
+                        <ListBox x:Name="aCadastrar" Grid.Row="2" Grid.Column="2"
+                                 MaxHeight="150"
+                                 ItemsSource="{Binding Livro.Autor}" />
+                        <Button Content="-" Grid.Row="2" Grid.Column="3" Grid.RowSpan="3" Width="20"
+                                Click="Remover_Click" />
+                    </Grid>
+                </GroupBox>
+                <GroupBox BorderBrush="{StaticResource redBrush}">
+                    <GroupBox.Header>
+                        <Border Background="{StaticResource redBrush}"
+                                Style="{StaticResource groupBoxHeader}">
+                            <TextBlock Text="Páginas" />
+                        </Border>
+                    </GroupBox.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="150" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Label Content="_Total"
+                               Target="{Binding ElementName=paginas}" />
+                        <TextBox x:Name="paginas"
+                                 Grid.Column="1"
+                                 Text="{Binding Livro.Paginas}" />
+                        <Label Content="_Lidas"
+                               Grid.Column="2"
+                               Target="{Binding ElementName=lido}" />
+                        <TextBox x:Name="lido"
+                                 Grid.Column="3"
+                                 Text="{Binding Livro.Lido}" />
+                        <Label Content="Progresso:"
+                               Grid.Row="1" />
+                        <Grid Grid.Row="1" Grid.Column="1"
+                              Grid.ColumnSpan="3"
+                              Margin="0 5">
+                            <ProgressBar x:Name="progresso" Value="{Binding Livro.Porcentagem, Mode=OneWay}"
+                                         Foreground="{StaticResource redBrush}" />
+                            <TextBlock Text="{Binding ElementName=progresso, Path=Value, StringFormat={}{0:0}%}" 
+                                       HorizontalAlignment="Center" 
+                                       VerticalAlignment="Center" />
+                        </Grid>
+                    </Grid>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</UserControl>

@@ -1,0 +1,40 @@
+﻿<Window x:Class="MeusLivros.Shell"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MeusLivros"
+        xmlns:uc="clr-namespace:MeusLivros.UserControls"
+        mc:Ignorable="d"
+        Title="Meus Livros" Height="450" Width="800" WindowState="Maximized" Icon="Resources/Icon/book_32.png">
+    <DockPanel>
+        <uc:SearchBar DockPanel.Dock="Top" />
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem DockPanel.Dock="Right">
+                <TextBlock Text="{Binding StatusText}" />
+            </StatusBarItem>
+        </StatusBar>
+        <Expander DockPanel.Dock="Left"
+                  ExpandDirection="Right"
+                  IsExpanded="True"
+                  BorderThickness="0 1 1 1"
+                  BorderBrush="Gray"
+                  Margin="0 2 0 0"
+                  Padding="2">
+            <Expander.Header>
+                <TextBlock Text="Livros"
+                           FontSize="14"
+                           FontWeight="Bold">
+                    <TextBlock.LayoutTransform>
+                        <RotateTransform Angle="90" />
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+            </Expander.Header>
+            <uc:SideBar />
+        </Expander>
+        <TabControl x:Name="tabs"
+                    Grid.Column="2"
+                    Margin="5 0">
+        </TabControl>
+    </DockPanel>
+</Window>
