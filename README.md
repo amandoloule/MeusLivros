@@ -1,7 +1,8 @@
 # MeusLivros
+A simple manager of personal books
 Um simples gerenciador de livros pessoais
 
-### Linguagem e tecnologias utilizadas
+### Language and Technologies utilized / Linguagem e tecnologias utilizadas
 
 - C#
 - .Net Framework
